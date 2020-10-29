@@ -109,3 +109,165 @@ sharedEdit.commit()
             startActivity(intent)
         }
 ```
+   
+     
+---   
+    
+      
+## 2주차 과제 (20.10.29 완료)    
+     
+* :pig: 상세보기 제공 Recyclerview (필수)     
+* :pig: GridLayout으로 변경하기 (성장1)      
+* :pig: Recyclerview Item 이동 및 삭제 구현 (성장2)  
+  * ItemTouchHelpterCallback, notifyItemMoved(), notifyItemRemoved() 이용     
+  
+  
+**:heavy_check_mark: 상세화면 및 아이템 이동, 삭제 실행화면**   
+   
+  ![2nd](/image/2nd필수과제.gif)    ![2nd](/image/2nd성장과제.gif)      
+  
+**:heavy_check_mark: GridLayout 변경 화면**     
+   
+  ![2nd](/image/GridLayout.png)   
+    
+    
+:cherries: RecyclerView 제작   
+* 아이템 형태 결정 (item_list.xml)   
+* 데이터 형태 결정 (Data class)  
+```kotlin
+data class homeData(
+    val title : String,
+    val subTitle : String,
+    val detail : String,
+    val date : String
+)
+```
+* 어디에 어떤 데이터? (ViewHolder)      
+  * View를 저장할 수 있는 변수 (ViewHolder(itemView : View))  
+  * View와 데이터를 연결시키는 함수 (onBind)   
+```kotlin
+class homeViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView) {
+    private val title : TextView = itemView.findViewById(R.id.item_title)
+    private val subTitle : TextView = itemView.findViewById(R.id.item_subTitle)
+
+    fun onBind(data : homeData) {
+        title.text=data.title
+        subTitle.text=data.subTitle
+    }
+}
+```
+* Recyclerviedw에 어떻게 데이터를 연결? (Adapter)  
+  * 3가지 함수 override 필요
+```kotlin
+class homeAdapter (private val context: Context) : RecyclerView.Adapter<homeViewHolder>() {
+
+    var data = mutableListOf<homeData>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): homeViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.item_list, parent, false)
+        return homeViewHolder(view)
+    }
+
+    override fun getItemCount(): Int = data.size
+
+    override fun onBindViewHolder(holder: homeViewHolder, position: Int) {
+        holder.onBind(data[position])
+    }
+```
+* Activity에 대입      
+  * Adapter 생성 후 data 넣기
+  * 어댑터 안에 데이터가 바뀌었다는 notify      
+```kotlin
+rcv.apply {
+    adapter = homeAdapter
+    layoutManager = LinearLayoutManager(this@HomeActivity)
+}
+
+homeAdapter.data = mutableListOf(
+     homeData("title", "subTitle", "detail", "date"),
+)
+
+homeAdapter.notifyDataSetChanged()
+  ```
+       
+         
+:cherries: Recyclerview item 클릭 시 상세보기    
+* Adapter 내에 SetOnClickListener 생성 (key 값에 data 내용 저장)    
+       
+```kotlin
+holder.itemView.setOnClickListener {
+    val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+    intent.putExtra("title", data[position].title)
+    intent.putExtra("subTitle", data[position].subTitle)
+    intent.putExtra("detail", data[position].detail)
+    intent.putExtra("date", data[position].date)
+    startActivity(holder.itemView.context, intent, null)
+}
+```   
+* activity_detail.xml 생성 (상세화면)    
+* DetailActivity 생성 (상세화면의 내용 변경)    
+
+```kotlin
+   this.detailTitle.text = intent.getStringExtra("title")
+   this.detailSubTitle.text = intent.getStringExtra("subTitle")
+   this.detail.text = intent.getStringExtra("detail")
+   this.date.text = intent.getStringExtra("date")
+```
+     
+:cherries: GridLayout으로 변경
+* LayoutManager를 GridLayoutManager로 변경 (context, spanCount)
+``` kotlin
+   LayoutManager = GridLayoutManager(this@HomeActivity, 2)
+```   
+
+:cherries: Recyclerview Item 이동 및 삭제
++ ItemTouchHelperCallback Class 생성
+  - 3가지 함수 override 필요  
+    + getMovementFlags -> Drag, Swipe 방향 지정
+    + onMove -> Drag 시 onItemMoved 호출, from과 to position 전달
+    + onSwiped -> Swipe 시 onItemSwiped 호출, 현재 위치 전달
+ 
+   
+ ```kotlin
+override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+     val dragFlags = ItemTouchHelper.DOWN or ItemTouchHelper.UP or ItemTouchHelper.START or ItemTouchHelper.END
+     val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+     return makeMovementFlags(dragFlags, swipeFlags)
+}
+override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, 
+                     target: RecyclerView.ViewHolder): Boolean {
+    adapter.onItemMoved(viewHolder!!.adapterPosition, target!!.adapterPosition)
+    return true
+}
+
+override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+    adapter.onItemSwiped(viewHolder!!.adapterPosition)
+    }
+ ```
+
+ 
+* Adapter 내에 OnItemMoved(), onItemSwiped() 구현
+```kotlin
+ fun onItemMoved(from: Int, to: Int) {
+        if(from<to) {
+            for(i in from until to)
+                Collections.swap(data,i,i+1)
+        } else {
+            for(i in from downTo to+1)
+                Collections.swap(data,i,i-1)
+        }
+        notifyItemMoved(from, to)
+        notifyDataSetChanged()
+    }
+
+    fun onItemSwiped(position: Int) {
+        data.removeAt(position)
+        notifyItemRemoved(position)
+        notifyDataSetChanged()
+    }
+```
+* itemTouchHelper 적용하기
+```kotlin
+  val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(homeAdapter))
+  itemTouchHelper.attachToRecyclerView(rcv)
+```
