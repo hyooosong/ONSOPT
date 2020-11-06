@@ -1,14 +1,14 @@
 ## 1주차 과제 (20.10.20 완료)  
-* :pig: 회원가입 (필수)   
-  * ToastMessage 출력(빈칸 여부)  
-  * EditText 속성 (hint, inputType_textPassword)  
-* :pig: 화면이동 + 정보저장 (성장1)    
-  * 회원가입 성공 시 이전 로그인 화면 돌아오기  
-  * 아이디와 비밀번호 입력 상태 (startActivityForResult)  
-* :pig: 자동로그인 (성장2)  
-  * 로그인 버튼 -> HomeActivity  
-  * 로그인 성공 시 id, password 기억하여 다음부터 자동 로그인 (SharedPreferences)  
-  * 자동 로그인일 경우 자동로그인 Toast Message  
++ :pig: 회원가입 (필수)   
+  + ToastMessage 출력(빈칸 여부)  
+  + EditText 속성 (hint, inputType_textPassword)  
++ :pig: 화면이동 + 정보저장 (성장1)    
+  + 회원가입 성공 시 이전 로그인 화면 돌아오기  
+  + 아이디와 비밀번호 입력 상태 (startActivityForResult)  
++ :pig: 자동로그인 (성장2)  
+  + 로그인 버튼 -> HomeActivity  
+  + 로그인 성공 시 id, password 기억하여 다음부터 자동 로그인 (SharedPreferences)  
+  + 자동 로그인일 경우 자동로그인 Toast Message  
 
 **:heavy_check_mark: 회원가입 완료 과정**   
    
@@ -25,8 +25,8 @@
    
     
 :cherries: 회원가입 빈칸 여부에 따른 Toast Message 출력
-* activity_sign_up.xml의 editText 값 가져오기   
-* isEmpty() 함수로 빈칸 여부 확인   
++ activity_sign_up.xml의 editText 값 가져오기   
++ isEmpty() 함수로 빈칸 여부 확인   
 
 ```kotlin
 val signName = editName.text.toString()
@@ -47,7 +47,7 @@ android:hint="비밀번호를 입력하세요"
 
 :cherries: 회원가입 성공 시 이전 로그인 화면 돌아오기 (아이디, 비밀번호 입력 상태)   
 
-* intent.putExtra(key, value) 를 통해 value 값을 key에 저장  
++ intent.putExtra(key, value) 를 통해 value 값을 key에 저장  
 
 _SignUpActivity.kt_  
 ```kotlin
@@ -57,8 +57,8 @@ setResult(RESULT_OK, intent)
 finish()
 ```
 
-* startActivityForResult(intent, requestCode) 이용하여 Activity에서 결과값 받아오기
-* resultCode == RESULT_OK 와 호출한 requestCode값 일치 시 로그인 화면에 아이디와 비밀번호 값 입력   
++ startActivityForResult(intent, requestCode) 이용하여 Activity에서 결과값 받아오기
++ resultCode == RESULT_OK 와 호출한 requestCode값 일치 시 로그인 화면에 아이디와 비밀번호 값 입력   
 
 _MainActivity.kt_  
 ```kotlin
@@ -77,15 +77,15 @@ signup_btn.setOnClickListener {
 ```
 
 :cherries: 자동 로그인  
-* SharedPreferences 생성 -> getSharedPreferences(key, mode)
-* 데이터를 저장, 수정, 삭제하기 위해 SharedPreferences.Editor 이용   
++ SharedPreferences 생성 -> getSharedPreferences(key, mode)
++ 데이터를 저장, 수정, 삭제하기 위해 SharedPreferences.Editor 이용   
 
 ```kotlin
  val sharedPref: SharedPreferences = getSharedPreferences("pref", Context.MODE_PRIVATE)
  val sharedEdit: SharedPreferences.Editor = sharedPref.edit()
 ```
-* 데이터 저장 editor.putString(key, value) 이용
-* 무조건 commit() 또는 apply() 적용해주어야함 :pencil2: :pencil2: :pencil2:
++ 데이터 저장 editor.putString(key, value) 이용
++ 무조건 commit() 또는 apply() 적용해주어야함 :pencil2: :pencil2: :pencil2:
 
 ```kotlin
 sharedEdit.putString("ID", editID.text.toString())
@@ -93,8 +93,8 @@ sharedEdit.putString("PW", editPW.text.toString())
 sharedEdit.commit()
 ```
 
-* ID의 key(="ID") 값이 blank가 아닌 경우 저장된 ID 값을 불러와서 자동로그인 안내
-* HomeActivity 이동
++ ID의 key(="ID") 값이 blank가 아닌 경우 저장된 ID 값을 불러와서 자동로그인 안내
++ HomeActivity 이동
 
 ```kotlin
  if (sharedPref.getString("ID", "").toString().isNotBlank() &&
@@ -116,9 +116,9 @@ sharedEdit.commit()
       
 ## 2주차 과제 (20.10.29 완료)    
      
-* :pig: 상세보기 제공 Recyclerview (필수)     
-* :pig: GridLayout으로 변경하기 (성장1)      
-* :pig: Recyclerview Item 이동 및 삭제 구현 (성장2)  
++ :pig: 상세보기 제공 Recyclerview (필수)     
++ :pig: GridLayout으로 변경하기 (성장1)      
++ :pig: Recyclerview Item 이동 및 삭제 구현 (성장2)  
   * ItemTouchHelpterCallback, notifyItemMoved(), notifyItemRemoved() 이용     
   
   
@@ -132,8 +132,8 @@ sharedEdit.commit()
     
     
 :cherries: RecyclerView 제작   
-* 아이템 형태 결정 (item_list.xml)   
-* 데이터 형태 결정 (Data class)  
++ 아이템 형태 결정 (item_list.xml)   
++ 데이터 형태 결정 (Data class)  
 ```kotlin
 data class homeData(
     val title : String,
@@ -142,9 +142,9 @@ data class homeData(
     val date : String
 )
 ```
-* 어디에 어떤 데이터? (ViewHolder)      
-  * View를 저장할 수 있는 변수 (ViewHolder(itemView : View))  
-  * View와 데이터를 연결시키는 함수 (onBind)   
++ 어디에 어떤 데이터? (ViewHolder)      
+  + View를 저장할 수 있는 변수 (ViewHolder(itemView : View))  
+  + View와 데이터를 연결시키는 함수 (onBind)   
 ```kotlin
 class homeViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView) {
     private val title : TextView = itemView.findViewById(R.id.item_title)
@@ -156,8 +156,8 @@ class homeViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView) {
     }
 }
 ```
-* Recyclerviedw에 어떻게 데이터를 연결? (Adapter)  
-  * 3가지 함수 override 필요
++ Recyclerviedw에 어떻게 데이터를 연결? (Adapter)  
+  + 3가지 함수 override 필요
 ```kotlin
 class homeAdapter (private val context: Context) : RecyclerView.Adapter<homeViewHolder>() {
 
@@ -174,9 +174,9 @@ class homeAdapter (private val context: Context) : RecyclerView.Adapter<homeView
         holder.onBind(data[position])
     }
 ```
-* Activity에 대입      
-  * Adapter 생성 후 data 넣기
-  * 어댑터 안에 데이터가 바뀌었다는 notify      
++ Activity에 대입      
+  + Adapter 생성 후 data 넣기
+  + 어댑터 안에 데이터가 바뀌었다는 notify      
 ```kotlin
 rcv.apply {
     adapter = homeAdapter
@@ -192,7 +192,7 @@ homeAdapter.notifyDataSetChanged()
        
          
 :cherries: Recyclerview item 클릭 시 상세보기    
-* Adapter 내에 SetOnClickListener 생성 (key 값에 data 내용 저장)    
++ Adapter 내에 SetOnClickListener 생성 (key 값에 data 내용 저장)    
        
 ```kotlin
 holder.itemView.setOnClickListener {
@@ -204,8 +204,8 @@ holder.itemView.setOnClickListener {
     startActivity(holder.itemView.context, intent, null)
 }
 ```   
-* activity_detail.xml 생성 (상세화면)    
-* DetailActivity 생성 (상세화면의 내용 변경)    
++ activity_detail.xml 생성 (상세화면)    
++ DetailActivity 생성 (상세화면의 내용 변경)    
 
 ```kotlin
    this.detailTitle.text = intent.getStringExtra("title")
@@ -215,7 +215,7 @@ holder.itemView.setOnClickListener {
 ```
      
 :cherries: GridLayout으로 변경
-* LayoutManager를 GridLayoutManager로 변경 (context, spanCount)
++ LayoutManager를 GridLayoutManager로 변경 (context, spanCount)
 ``` kotlin
    LayoutManager = GridLayoutManager(this@HomeActivity, 2)
 ```   
@@ -270,4 +270,98 @@ override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 ```kotlin
   val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(homeAdapter))
   itemTouchHelper.attachToRecyclerView(rcv)
+```
+
+## 3주차 과제 (20.11.06 완료)  
++ :pig: BottomNavigationView를 이용한 fragment 변경   
+  + 첫번째 화면 - 프로필
+  + 두번째 화면 - 2주차 Recyclerview
+  + 세번째 화면 - 빈 화면
++ :pig: TabLayout을 이용한 fragment 변경    
+
+**:heavy_check_mark: 3주차 과제**     
+   
+  ![2nd](/image/3rd과제.gif)   
+      
+:cherries: [전체 화면] BottomNavigationView와 Viewpager로 구성
++ Viewpager를 구성할 3가지의 fragment 필요
+  + ThirdFragment()
+  + RCVFragment() -> 2nd_assignment
+  + ProfileFragment()
+    + :fire: fragment_profile을 구성하는 fragment.kt
+    - onviewCreated() 함수를 이용해 viewpager(profileVP)에 adapter 할당 및 클릭 구현 
+   
+_ProfileFragment.kt_    
+```kotlin
+   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var index by Delegates.notNull<Int>()
+
+        prof_viewpagerAdapter = ProfileVPAdapter(childFragmentManager)
+        prof_viewpagerAdapter.fragments = listOf(
+            FirstFragment(),
+            SecondFragment()
+        )
+
+        profileVP.adapter = prof_viewpagerAdapter
+        tabLayout.setupWithViewPager(profileVP)
+
+        tabLayout.apply {
+            getTabAt(0)?.text="INFO"
+            getTabAt(1)?.text="OTHER"
+        }
+    }
+```    
+
+_ProfileVPActivity.kt_    
+     
+* 전체화면의 Activity
+* BottomNavigationview 와 전체 Viewpager에 관한 움직임 담당
+      
+``` kotlin
+   //하단 탭 클릭 시 뷰페이저 변경
+ bottom_navi.setOnNavigationItemSelectedListener {
+       var index by Delegates.notNull<Int>()
+
+       when(it.itemId) {
+           R.id.account -> index = 0
+           R.id.home -> index = 1
+           R.id.check -> index = 2
+       }
+       viewpager.currentItem = index
+       true
+}
+  // 뷰페이저 슬라이드 시 하단 탭 변경
+viewpager.addOnPageChangeListener(object  : ViewPager.OnPageChangeListener {
+     override fun onPageScrollStateChanged(state: Int) {}
+
+     override fun onPageScrolled(
+        position: Int,
+        positionOffset: Float,
+        positionOffsetPixels: Int
+     ) {}
+     override fun onPageSelected(position: Int) {
+        bottom_navi.menu.getItem(position).isChecked = true
+     }
+})
+```
+
++ Adapter : ViewPagerAdapter 역할을 위해 FragmentStatePagerAdapter 상속
+  + `var fragments = ListOf<Fragment>()` 이용하여 Fragment 리스트 만듦
+  + getItem()과 getCount() 메소드 반드시 override 필요
+  
+```kotlin
+class ProfileVPAdapter (fm : FragmentManager)
+    : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
+
+    var fragments = listOf<Fragment>()
+
+    override fun getItem(position: Int): Fragment = when(position) {
+        0 -> FirstFragment()
+        1 -> SecondFragment()
+
+        else -> throw IllegalStateException("Unexpected position $position")
+    }
+    override fun getCount(): Int = 2
+}
 ```
