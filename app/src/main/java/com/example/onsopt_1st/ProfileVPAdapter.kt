@@ -17,5 +17,4 @@ class ProfileVPAdapter (fm : FragmentManager)
         else -> throw IllegalStateException("Unexpected position $position")
     }
     override fun getCount(): Int = 2
-
 }
