@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 sharedEdit.commit()
 
                 Toast.makeText(this, "로그인 되었습니다!", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, HomeActivity::class.java)
+                val intent = Intent(this, ProfileVPActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                     sharedPref.getString("ID", "").toString() + "님 자동로그인 되었습니다!",
                     Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, ProfileVPActivity::class.java)
             startActivity(intent)
         }
     }
