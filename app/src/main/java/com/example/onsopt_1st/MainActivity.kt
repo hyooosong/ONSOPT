@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -50,6 +52,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileVPActivity::class.java)
             startActivity(intent)
         }
+
+
     }
 
     //회원가입 정보 로그인 화면으로 가져오기
