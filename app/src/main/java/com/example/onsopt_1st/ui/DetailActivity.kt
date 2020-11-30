@@ -1,7 +1,8 @@
-package com.example.onsopt_1st
+package com.example.onsopt_1st.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.onsopt_1st.R
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {

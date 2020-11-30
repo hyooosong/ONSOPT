@@ -1,7 +1,8 @@
-package com.example.onsopt_1st
+package com.example.onsopt_1st.util
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.onsopt_1st.util.homeAdapter
 
 class ItemTouchHelperCallback(val adapter: homeAdapter) : ItemTouchHelper.Callback() {
 

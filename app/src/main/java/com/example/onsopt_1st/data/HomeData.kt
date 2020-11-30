@@ -1,6 +1,4 @@
-package com.example.onsopt_1st
-
-import java.util.*
+package com.example.onsopt_1st.data
 
 data class homeData(
     val title : String,

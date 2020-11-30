@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/account"
-        android:icon="@drawable/ic_baseline_account_circle"
-        android:title="account" />
+        android:icon="@drawable/ic_baseline_account_me"
+        android:title="Me" />
 
     <item
-        android:id="@+id/home"
-        android:icon="@drawable/ic_baseline_home"
-        android:title="home" />
+        android:id="@+id/portfolio"
+        android:icon="@drawable/ic_baseline_portfolio"
+        android:title="Portfolio" />
 
     <item
-        android:id="@+id/check"
-        android:icon="@drawable/ic_baseline_check_circle"
-        android:title="check"/>
+        android:id="@+id/setting"
+        android:icon="@drawable/ic_baseline_settings"
+        android:title="Setting"/>
 </menu>

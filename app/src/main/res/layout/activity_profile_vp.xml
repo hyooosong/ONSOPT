@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileVPActivity">
+    tools:context=".ui.ProfileVPActivity">
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/black"
         app:itemIconTint="@color/bottom_navi_color"
         app:itemRippleColor="#86C3BA"
         app:itemTextColor="@color/bottom_navi_color"

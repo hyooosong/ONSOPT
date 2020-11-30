@@ -1,12 +1,14 @@
-package com.example.onsopt_1st
+package com.example.onsopt_1st.util
 
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.onsopt_1st.ui.DetailActivity
+import com.example.onsopt_1st.R
+import com.example.onsopt_1st.data.homeData
 import java.util.*
 
 class homeAdapter (private val context: Context) : RecyclerView.Adapter<homeViewHolder>() {

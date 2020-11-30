@@ -1,10 +1,11 @@
-package com.example.onsopt_1st
+package com.example.onsopt_1st.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
+import com.example.onsopt_1st.R
+import com.example.onsopt_1st.util.adapter.VPAdapter
 import kotlinx.android.synthetic.main.activity_profile_vp.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlin.properties.Delegates
 
 class ProfileVPActivity : AppCompatActivity() {
@@ -17,8 +18,8 @@ class ProfileVPActivity : AppCompatActivity() {
         viewpagerAdapter = VPAdapter(supportFragmentManager)
         viewpagerAdapter.fragments= listOf(
             ProfileFragment(),
-                RCVFragment(),
-                ThirdFragment()
+            RCVFragment(),
+            SettingFragment()
         )
 
         viewpager.adapter = viewpagerAdapter
@@ -43,8 +44,8 @@ class ProfileVPActivity : AppCompatActivity() {
 
             when(it.itemId) {
                 R.id.account -> index = 0
-                R.id.home -> index = 1
-                R.id.check -> index = 2
+                R.id.portfolio -> index = 1
+                R.id.setting -> index = 2
             }
             viewpager.currentItem = index
             true

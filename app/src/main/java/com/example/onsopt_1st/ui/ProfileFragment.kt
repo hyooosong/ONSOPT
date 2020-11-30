@@ -1,15 +1,12 @@
-package com.example.onsopt_1st
+package com.example.onsopt_1st.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import com.google.android.material.tabs.TabItem
-import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.activity_profile_vp.*
+import com.example.onsopt_1st.R
+import com.example.onsopt_1st.util.adapter.ProfileVPAdapter
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlin.properties.Delegates
 
@@ -31,15 +28,15 @@ class ProfileFragment : Fragment(){
 
         prof_viewpagerAdapter = ProfileVPAdapter(childFragmentManager)
         prof_viewpagerAdapter.fragments = listOf(
-            FirstFragment(),
-            SecondFragment()
+            ProjectFragment(),
+            OtherFragment()
         )
 
         profileVP.adapter = prof_viewpagerAdapter
         tabLayout.setupWithViewPager(profileVP)
 
         tabLayout.apply {
-            getTabAt(0)?.text="INFO"
+            getTabAt(0)?.text="PROJECTS"
             getTabAt(1)?.text="OTHER"
         }
     }

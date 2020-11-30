@@ -1,10 +1,14 @@
-package com.example.onsopt_1st
+package com.example.onsopt_1st.ui
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.onsopt_1st.R
+import com.example.onsopt_1st.data.homeData
+import com.example.onsopt_1st.util.ItemTouchHelperCallback
+import com.example.onsopt_1st.util.homeAdapter
 import kotlinx.android.synthetic.main.fragment_rcv.*
 
 class RCVFragment : Fragment() {
