@@ -165,7 +165,13 @@ val email = editID.text.toString()
                                 val intent = Intent(this@MainActivity, ProfileVPActivity::class.java)
                                 startActivity(intent)
                             }
-```        
+```          
+
+**:heavy_check_mark: dummy USERLIST 통신 & 카카오 웹 검색**   
+    
+![6th](/image/dummy_kakao.gif)   
+
+
 
 ---     
 
