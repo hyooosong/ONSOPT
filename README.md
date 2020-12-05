@@ -1,6 +1,174 @@
-[1️⃣주차 과제](#1%EC%A3%BC%EC%B0%A8-%EA%B3%BC%EC%A0%9C-201020-%EC%99%84%EB%A3%8C)     
-[2️⃣주차 과제](#2%EC%A3%BC%EC%B0%A8-%EA%B3%BC%EC%A0%9C-201029-%EC%99%84%EB%A3%8C)     
-[3️⃣주차 과제](#3%EC%A3%BC%EC%B0%A8-%EA%B3%BC%EC%A0%9C-201106-%EC%99%84%EB%A3%8C)
+[1주차 과제](#1%EC%A3%BC%EC%B0%A8-%EA%B3%BC%EC%A0%9C-201020-%EC%99%84%EB%A3%8C)     
+[2주차 과제](#2%EC%A3%BC%EC%B0%A8-%EA%B3%BC%EC%A0%9C-201029-%EC%99%84%EB%A3%8C)     
+[3주차 과제](#3%EC%A3%BC%EC%B0%A8-%EA%B3%BC%EC%A0%9C-201106-%EC%99%84%EB%A3%8C)    
+[6주차 과제]    
+
+
+## 6주차 과제 (20.12.05 완료)  
++ :pig: 로그인/회원가입 서버 통신 (필수)   
++ :pig: 더미데이터를 이용한 LIST USERS 통신 (성장1)    
++ :pig: 카카오 웹 검색 API (성장2)  
+
+
+**:heavy_check_mark: 회원가입/로그인 화면**   
+     
+![6th](/image/Sign_server.gif)             ![6th](/image/sign_error.gif)   
+
+**:heavy_check_mark: 로그인 성공 POSTMAN**   
+    
+![6th](/image/postman_login.PNG)   
+
+**:heavy_check_mark: 회원가입 성공 및 실패(중복 이메일) POSTMAN**   
+    
+![6th](/image/postman_signup.PNG)          ![6th](/image/postman_signup_ok.PNG)     
+
+:cherries:  준비 과정
++ Retrofit 라이브러리 설정   
+`implementation 'com.squareup.retrofit2:retrofit:2.9.0’`   
+`implementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'`   
++ Gson 라이브러리 설정       
+`implementation 'com.google.code.gson:gson:2.8.6’`    
+`implementation 'com.squareup.retrofit2:converter-gson:2.9.0'`    
++ 인터넷 권한 허용 및 http 프로토콜 접속 예외 처리 (Manifest.xml 작성)         
+`<uses-permission android:name="android.permission.INTERNET"/>`         
+`<application android:usesCleartextTraffic="True"/>`      
+
+
+:cherries:  Retrofit Interface 설계 (SoptService)    
++ Headers 작성 (Content-Type:application/json)
++ [POST/GET/PUT/DELETE] ("자원 식별 URL")    
+
+```kotlin
+interface SoptService {
+    @Headers("Content-Type:application/json")
+    @POST ("/users/signup")
+    fun postSignup(
+        @Body body : RequestSignupData
+    ) : Call<ResponseSignData>
+
+    @POST("/users/signin")
+    fun postLogin(
+        @Body body : RequestLoginData
+    ) : Call<ResponseSignData>
+}
+```    
+:cherries:  RequestLoginData    
++ email, password 요청 필요
+```kotlin
+data class RequestLoginData (
+    val email: String,
+    val password: String
+)
+```   
+
+:cherries:  RequestSignupData
++ email, password, username 요청 필요
+```kotlin
+data class RequestSignupData (
+    val email: String,
+    val password: String,
+    val userName: String
+)
+```   
+
+:cherries:  ResponseSignData
++ status (400 == error) , success, message(toast 출력), data(email, password, username) 응답 바디
+```kotlin
+data class ResponseSignData(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data : Data
+) {
+    data class Data(
+        val email: String,
+        val password: String,
+        val userName: String
+    )
+}
+```
+
+:cherries: Retrofit Interface 실제 구현체 (SoptServiceImpl)   
++ `object ServiceImpl { }` -> 싱글톤 객체로 사용하기 위해 object 선언
++ `BASE_URL=" "`로 메인 서버 변수 선언
++ Retrofit 객체 생성
+  - `Retrofit.Builder()` : retrofit 빌더 생성
+  - `baseUrl(BASE_URL)` : 빌더 객체의 baseUrl 호출, 서버 메인 URL 전달
+  - `addConverterFactory(GsonConverterFactory.create())` : gson 연동 (retrofit 데이터 다루기 쉽게)
+  - `build()` : Retrofit 객체 
+  
+```kotlin
+  object SoptServiceImpl {
+    private const val BASE_URL="http://15.164.83.210:3000"
+
+    private val retrofit : Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+  }
+```    
+
++ Activity에 Callback 등록 후 통신 요청
+  - Call<Type> : 비동기적으로 Type을 받아오는 객체
+  - Callback<Type> : Type 객체를 받아왔을 때 프로그래머의 행동
+  - enqueue : 실제 서버 통신을 비동기적으로 요청   
+  
+_SignupActivity.kt_      
+```kotlin
+   val call : Call<ResponseSignData> = SoptServiceImpl.service.postSignup(
+                    RequestSignupData(email=signID, password=signPW, userName=signName))
+               call.enqueue(object : Callback<ResponseSignData> {
+                    override fun onResponse(
+                            call: Call<ResponseSignData>,
+                            response: Response<ResponseSignData>
+                    ) {
+                        response.takeIf { it.isSuccessful }
+                            ?.body()
+                            ?.let { it ->
+                                Toast.makeText(this@SignUpActivity, "회원가입이 완료되었습니다!",
+                                Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+
+                                //ID, PW 값에 회원가입 정보 넣기
+                                intent.putExtra("ID", signID)
+                                intent.putExtra("PW", signPW)
+                                setResult(RESULT_OK, intent)
+                                finish()
+                            } 
+                    }
+```   
+_MainActivity.kt_    
+```kotlin
+val email = editID.text.toString()
+                val password = editPW.text.toString()
+                val call: Call<ResponseSignData> = SoptServiceImpl.service.postLogin(
+                    RequestLoginData(email = email, password = password)
+                )
+                call.enqueue(object : Callback<ResponseSignData> {
+                    override fun onFailure(call: Call<ResponseSignData>, t: Throwable) {
+                        Log.d("통신 실패", t.toString())
+                    }
+
+                    override fun onResponse(
+                        call: Call<ResponseSignData>,
+                        response: Response<ResponseSignData>
+                    ) {
+                        response.takeIf { it.isSuccessful }
+                            ?.body()
+                            ?.let { it ->
+                                sharedEdit.putString("ID", email)
+                                sharedEdit.putString("PW", password)
+                                sharedEdit.putString("Name", it.data.userName)
+                                sharedEdit.commit()
+                                Toast.makeText(this@MainActivity, sharedPref.getString("Name", "").toString()+ 
+                                " 님 로그인 되었습니다!", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@MainActivity, ProfileVPActivity::class.java)
+                                startActivity(intent)
+                            }
+```        
+
+---     
+
 
 ## 1주차 과제 (20.10.20 완료)  
 + :pig: 회원가입 (필수)   
@@ -274,7 +442,9 @@ override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 ```kotlin
   val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(homeAdapter))
   itemTouchHelper.attachToRecyclerView(rcv)
-```
+```     
+
+---   
 
 ## 3주차 과제 (20.11.06 완료)  
 + :pig: BottomNavigationView를 이용한 fragment 변경   
@@ -368,4 +538,4 @@ class ProfileVPAdapter (fm : FragmentManager)
     }
     override fun getCount(): Int = 2
 }
-```
+```         
