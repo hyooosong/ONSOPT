@@ -12,15 +12,15 @@
 
 **:heavy_check_mark: 회원가입/로그인 화면**   
      
-![6th](/image/Sign_server.gif)             ![6th](/image/sign_error.gif)   
+![6th](/image/signupok.gif)             ![6th](/image/signuperror.gif)   
 
 **:heavy_check_mark: 로그인 성공 POSTMAN**   
     
-![6th](/image/postman_login.PNG)   
+![6th](/image/postman_loginok.PNG)   
 
 **:heavy_check_mark: 회원가입 성공 및 실패(중복 이메일) POSTMAN**   
     
-![6th](/image/postman_signup.PNG)          ![6th](/image/postman_signup_ok.PNG)     
+![6th](/image/postman_signuperror.PNG)          ![6th](/image/postman_signup_ok.PNG)     
 
 :cherries:  준비 과정
 + Retrofit 라이브러리 설정   
