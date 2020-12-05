@@ -38,6 +38,7 @@ class ProfileVPActivity : AppCompatActivity() {
                 bottom_navi.menu.getItem(position).isChecked = true
             }
         })
+
         //하단 탭 클릭 시 뷰페이저 변경
         bottom_navi.setOnNavigationItemSelectedListener {
             var index by Delegates.notNull<Int>()
@@ -50,7 +51,5 @@ class ProfileVPActivity : AppCompatActivity() {
             viewpager.currentItem = index
             true
         }
-
-
     }
 }

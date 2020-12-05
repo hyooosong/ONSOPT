@@ -1,9 +1,10 @@
-package com.example.onsopt_1st
+package com.example.onsopt_1st.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.widget.Toast
+import com.example.onsopt_1st.R
 import com.example.onsopt_1st.api.SoptServiceImpl
 import com.example.onsopt_1st.data.RequestSignupData
 import com.example.onsopt_1st.data.ResponseSignData

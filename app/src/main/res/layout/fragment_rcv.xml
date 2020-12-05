@@ -9,12 +9,25 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/gridSwitch" />
+
+    <Switch
+        android:background="@color/black"
+        android:id="@+id/gridSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:text="GridLayout"
+        android:textColor="#FFFFFF"
+        android:paddingTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="end" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <TextView
+        android:id="@+id/project_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:text="프로젝트 제목"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/project_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="기간 (ex. 20.07.01 ~ 20.08.31)"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp"
+        android:textColor="#afafaf"
+        app:layout_constraintStart_toStartOf="@id/project_title"
+        app:layout_constraintTop_toBottomOf="@id/project_title" />
+    />
+
+    <TextView
+        android:id="@+id/project_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:text="한 줄 설명"
+        app:layout_constraintStart_toStartOf="@id/project_title"
+        app:layout_constraintTop_toBottomOf="@id/project_date"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

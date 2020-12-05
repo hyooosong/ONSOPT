@@ -5,18 +5,33 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8BC34A"
-    tools:context=".ui.SettingFragment">
+    tools:context=".ui.SettingFragment"
+    android:background="@color/black">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
-        android:id="@+id/thirdFM_txt"
+        android:background="@drawable/login_btn"
+        android:id="@+id/btn_dummyUser"
+        android:textColor="#FFD500"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Third Fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="USER LIST"
+        android:padding="10dp"
+        android:layout_marginTop="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/btn_kakaoAPI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="KAKAO SERACH"
+        android:padding="10dp"
+        android:textColor="#FFD500"
+        android:background="@drawable/login_btn"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_dummyUser"
+        app:layout_constraintStart_toStartOf="@+id/btn_dummyUser"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dummyUser" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.onsopt_1st
+package com.example.onsopt_1st.ui
 
 import android.content.Context
 import android.content.Intent
@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.onsopt_1st.R
 import com.example.onsopt_1st.api.SoptServiceImpl
 import com.example.onsopt_1st.data.RequestLoginData
 import com.example.onsopt_1st.data.ResponseSignData
-import com.example.onsopt_1st.ui.ProfileVPActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -33,10 +33,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "아이디와 비밀번호를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
             }
             else {
-                sharedEdit.putString("ID", editID.text.toString())
-                sharedEdit.putString("PW", editPW.text.toString())
-                sharedEdit.commit()
-
                 val email = editID.text.toString()
                 val password = editPW.text.toString()
                 val call: Call<ResponseSignData> = SoptServiceImpl.service.postLogin(
@@ -54,7 +50,11 @@ class MainActivity : AppCompatActivity() {
                         response.takeIf { it.isSuccessful }
                             ?.body()
                             ?.let { it ->
-                                Toast.makeText(this@MainActivity, "로그인 되었습니다!", Toast.LENGTH_SHORT).show()
+                                sharedEdit.putString("ID", email)
+                                sharedEdit.putString("PW", password)
+                                sharedEdit.putString("Name", it.data.userName)
+                                sharedEdit.commit()
+                                Toast.makeText(this@MainActivity, sharedPref.getString("Name", "").toString()+ " 님 로그인 되었습니다!", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@MainActivity, ProfileVPActivity::class.java)
                                 startActivity(intent)
                             } ?: showError(response.errorBody())
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         ) {
             Toast.makeText(
                     this,
-                    sharedPref.getString("ID", "").toString() + "님 자동로그인 되었습니다!",
+                    sharedPref.getString("Name", "").toString() + "님 자동로그인 되었습니다!",
                     Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, ProfileVPActivity::class.java)
